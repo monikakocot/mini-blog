@@ -36,6 +36,9 @@ public class MainController {
         if(userSessionService.getUserDto() == null) {
             model.addAttribute("name", "You are not logged in baby ;)");
             return "logout";
+        }else if(userSessionService.getUserDto().getUserName().equals("administrator"))  {
+            model.addAttribute("name", userSessionService.getUserDto().getUserName());
+            return "admin";
         } else{
             model.addAttribute("name", userSessionService.getUserDto().getUserName());
             return "index";

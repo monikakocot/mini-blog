@@ -39,7 +39,8 @@ public class UserController {
         }
         User user = modelMapper.map(registerForm, User.class);
         userRepository.save(user);
-        return "index";
+        //return "index";
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
@@ -53,13 +54,19 @@ public class UserController {
 
         boolean logged = userSessionService.loginUser(loginForm.getUserName(), loginForm.getPassword());
         if(!logged){
+            model.addAttribute("logged",logged);
             bindingResult.rejectValue("userName", null,"User does not exist.");
         }
         if(bindingResult.hasErrors()){
             return "login";
         }
-        model.addAttribute("loggedUser", logged);
+        // new for admin option:
+        if(loginForm.getUserName().equals("administrator") && loginForm.getPassword().equals("adminadmin")){
+            model.addAttribute("loggedUser", logged);
+            return "admin";
+        }
 
+        model.addAttribute("loggedUser", logged);
         return "redirect:/";
     }
 
@@ -67,5 +74,11 @@ public class UserController {
     public String loginPage(Model model){
         model.addAttribute("loginForm", new LoginForm());
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model){
+        userSessionService.setLogged(false);
+        return "logout";
     }
 }

@@ -100,14 +100,18 @@
             <form th:action="@{/login}" method="post" th:object="${loginForm}">
                <!-- <div class="container">-->
                     <label for="uname"><b>Username</b></label>
-                    <input th:type="text" th:field="*{userName}" placeholder="Nazwa użytkownika..."
+                    <input th:type="text" th:field="*{userName}" placeholder="User's name..."
                            th:errorClass="error">
 
                     <label for="psw"><b>Password</b></label>
                     <input th:type="password" th:field="*{password}" th:errorClass="error">
                     <span th:if="${#fields.hasErrors('password')}"
-                          th:errors="*{password}">Blad nazwy uzytkownika...</span>
+                          th:errors="*{password}">The password is incorrect...</span>
                     <button type="submit" th:value="Zaloguj">Login</button>
+
+                <div th:if="${logged}==false" class="col-sm-4">
+                    <p> User does not exist! </p>
+                </div>
              <!--   </div>-->
                <!-- <div class="container" style="background-color:#f1f1f1">
                     <button type="button" class="cancelbtn">Cancel</button>
@@ -115,9 +119,15 @@
                 </div>-->
             </form>
         </div>
-        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+        </div>
     </div>
+
 </div>
+<!--
+<div th:if="${logged}==false">
+    <p> User does not exist! </p>
+</div>-->
 
 
 </body>
