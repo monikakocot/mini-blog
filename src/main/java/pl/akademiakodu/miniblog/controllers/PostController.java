@@ -40,8 +40,6 @@ public class PostController {
             asd.addComment(postComment);
             postRepository.save(asd);
         });
-
-
         return "redirect:/post/" + postId;
     }
 

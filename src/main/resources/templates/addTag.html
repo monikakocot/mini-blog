@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini blog - adding tags</title>
+</head>
+<body>
+
+<div>
+<h1>Add Tag to The post</h1>
+<form th:action="@{/addTag}" method="post">
+    <input type="text" th:name="tagId" placeholder="TagId...">
+    <br>
+    <input th:type="text" th:name="postId" placeholder="PostId...">
+    <br>
+    <input th:type="submit" value="Add Tag!">
+</form>
+</div>
+
+<div>
+<h1>My tags:</h1>
+    <table>
+        <tr>
+            <th>Id: </th>
+            <th>TagName: </th>
+        </tr>
+        <tr th:each="tag : ${tags}">
+            <td th:text="${tag.id}"/>
+            <td th:text="${tag.tagName}"/>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <h1>Add new Tag</h1>
+    <form th:action="@{/newTag}" method="post">
+        <input type="text" th:name="tagName" placeholder="Tag Name...">
+        <br>
+        <input th:type="submit" value="Add New Tag!">
+    </form>
+</div>
+
+</body>
+</html>
