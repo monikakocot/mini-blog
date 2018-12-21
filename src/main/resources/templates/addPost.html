@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Mini blog - adding posts</title>
+
+    <!--BOOTSTRAP-->
+    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!--END BOOTSTRAP-->
+
 </head>
 <body>
 
-<h1>Add new post</h1>
-<form th:action="@{/addPost}" method="post">
-
-    <input type="text" th:name="title" placeholder="Title...">
-    <br>
-    <textarea th:type="text" th:name="content" placeholder="Content...">
-    </textarea>
-    <br>
-    <input th:type="submit" value="Add post!">
-
-</form>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <h3>Add new post</h3>
+                <form th:action="@{/addPost}" method="post">
+                    <input type="text" th:name="title" placeholder="Title...">
+                    <br>
+                    <textarea th:type="text" th:name="content" placeholder="Content...">
+                    </textarea>
+                    <br>
+                    <input th:type="submit" value="Add post!">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

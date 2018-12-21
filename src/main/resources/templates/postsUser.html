@@ -3,34 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Mini blog</title>
+
+    <!--BOOTSTRAP-->
+    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!--END BOOTSTRAP-->
+
 </head>
 <body>
-<div class="header">
-    <div th:replace="~{includes/searchbar :: searchForm}"></div>
-</div>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div th:replace="~{includes/searchbar :: searchForm}"></div>
+                <div>
+                    <a th:href="@{/sortedPosts}">
+                        <button name="title" method="get">
+                            Sort posts </button>
+                    </a>
+                </div>
+            </div>
 
-<div>
-    <a th:href="@{/sortedPosts}">
-        <button name="title" method="get">
-            Sort posts </button>
-    </a>
-</div>
+            <h3>My posts</h3>
+            <div th:each="post : ${posts}">
 
+                <h2 th:text="${post.title}"></h2>
+                <div th:text="${post.content}"></div>
+                <!-- czas, treść -->
+                <br>
+                <h3> Comments:</h3>
+                <div th:each="comment : ${post.comments}">
+                    <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
+                    <div th:text="${comment.comment}"></div>
+                </div>
+                <a th:href="@{'/post/' + ${post.id} + '/addComment/'}">Add Comment!</a>
 
-<h1>My posts</h1>
-<div th:each="post : ${posts}">
-
-    <h2 th:text="${post.title}"></h2>
-    <div th:text="${post.content}"></div>
-    <!-- czas, treść -->
-    <br>
-    <h3> Comments:</h3>
-    <div th:each="comment : ${post.comments}">
-        <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
-        <div th:text="${comment.comment}"></div>
+            </div>
+        </div>
     </div>
-    <a th:href="@{'/post/' + ${post.id} + '/addComment/'}">Add Comment!</a>
-
 </div>
+
 </body>
 </html>

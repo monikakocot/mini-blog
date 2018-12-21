@@ -31,7 +31,6 @@ public class TagRestController {
         tag.setTagName(tagName);
 
         tagRepository.save(tag);
-
         TagDto tagDto = modelMapper.map(tag, TagDto.class);
 
         return ResponseEntity

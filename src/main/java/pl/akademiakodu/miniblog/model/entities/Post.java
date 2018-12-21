@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-//Adnotacja JPA. Klasa taka, którą adnotujemy za pomocą @Entity,
+// Adnotacja JPA. Klasa taka, którą adnotujemy za pomocą @Entity,
 // musi mieć publiczne gettery i settery dla każdego pola.
 // Założenia przyjęte przez JPA w takiej sytuacji są następujące:
 // tabela nazywa się tak jak klasa.
@@ -45,8 +45,7 @@ public class Post implements Comparable<Post>{
 // In User class no Maping and NO @OneToMany. We dont need list of posts for user
     @ManyToOne
     @JoinColumn(name = "userId")
-//@Getter
-//@Setter
+
     private User user;
 
 

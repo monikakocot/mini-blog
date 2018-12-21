@@ -28,9 +28,6 @@ public class PostRestController {
     @Autowired
     ModelMapper modelMapper;
 
-//    @Autowired
-//    UserRepository userRepository;
-
     //@PostMapping("/api/post/{postId}/comment")
     @PostMapping("/api/postComment/{postId}/comment")
     public ResponseEntity<PostCommentDto> addPostComment(@PathVariable Long postId, @RequestParam String comment){
@@ -39,7 +36,6 @@ public class PostRestController {
         postComment.setComment(comment);
 
         Post post = postOptional.get();
-
 //        postComment.setPost(post);
 //        postCRepo.save()
 
@@ -57,7 +53,7 @@ public class PostRestController {
     }
 
     // does not work. We need method with Post not PostDto.
-    // here is another like with createTag couse we dont made Mapper Post->PostDto
+    // here is another like with createTag cause we haven't made Mapper Post->PostDto
     // also we need first userId ?
     @PostMapping("/api/post")
     public ResponseEntity<PostDto> addPost(@RequestParam String title

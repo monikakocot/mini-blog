@@ -1,7 +1,6 @@
 package pl.akademiakodu.miniblog.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +16,13 @@ import pl.akademiakodu.miniblog.services.UserSessionService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 public class MainController {
 
     private PostRepository postRepository;
     private UserSessionService userSessionService;
-
 
     @Autowired
     public MainController(PostRepository postRepository, UserSessionService userSessionService) {
@@ -104,7 +102,7 @@ public class MainController {
         return "postsUser";
     }
 
-    // DZIALA BEZ IMPLEMENTACJI METODY findAllByTitleContains(title) !!!!!!!!!!!!! :O :O :O
+    //WORKS WITHOUT IMPLEMENTATION findAllByTitleContains(title) ??????!!!!!!!!!!!!! :O :O :O
     @GetMapping("/posts/{title}")
     public String postsByTitle(@PathVariable String title, Model model, Post post){
         List<Post> postsList = new ArrayList<>();
@@ -116,18 +114,14 @@ public class MainController {
 
         return "post";
     }
-
-
-// Its not the best but working ....
+// Its not the best but works ....
     @GetMapping("/sortedPosts")
     public String sortedPostsByTitle(Model model){
         model.addAttribute("posts",sortService.sortPosts(postRepository));
         return "sortedPosts";
     }
 
-
-
-// The moethod below DOES NOT WORK
+// The methods below DOES NOT WORK
 
     @GetMapping("/sortedPosts2")
     public String sortedPostsByTitle2(Model model){

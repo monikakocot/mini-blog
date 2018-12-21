@@ -18,7 +18,16 @@ public class PostDto {
 
     @JsonManagedReference
     private Set<TagDto> tags;
+/*
+@JsonManagedReference i @JsonBackReference są przeznaczone do obsługi tego dwukierunkowego powiązania między polami,
+jeden dla roli Rodzica, drugi dla roli Dziecka.
+Are used to solve the Infinite recursion (StackOverflowError).
+Aby uniknąć problemu, łączenie jest obsługiwane tak, aby adnotowana właściwość z adnotacją @JsonManagedReference była obsługiwana
+normalnie (normalizowana serializowana, be specjalnej obsługi dla deserializacji), a adnotowana właściwość z adnotacją
+@JsonBackReference nie jest serializowana; podczas deserializacji jej wartość jest ustawiona na instancję, która ma link "managed" (forward).
 
+@JsonIgnore wykonuje podobne funkcje, ale wyżej wymienione adnotacje są preferowane.
+ */
 
     //GETTERS, SETTERS, TO STRING
     public Long getId() {
