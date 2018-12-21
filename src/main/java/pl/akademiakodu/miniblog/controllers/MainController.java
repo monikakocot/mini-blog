@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.akademiakodu.miniblog.model.entities.Post;
 import pl.akademiakodu.miniblog.model.entities.PostComment;
 import pl.akademiakodu.miniblog.model.repositories.PostRepository;
+import pl.akademiakodu.miniblog.services.SortService;
 import pl.akademiakodu.miniblog.services.UserSessionService;
 
 import java.util.ArrayList;
@@ -24,11 +25,16 @@ public class MainController {
     private PostRepository postRepository;
     private UserSessionService userSessionService;
 
+
     @Autowired
     public MainController(PostRepository postRepository, UserSessionService userSessionService) {
         this.postRepository = postRepository;
         this.userSessionService = userSessionService;
     }
+
+    @Autowired
+    SortService sortService;
+
     @GetMapping("/")
     public String getIndexPage(Model model){
         model.addAttribute("loggedUser", userSessionService.getUserDto()); //userDto store data about logged users
@@ -93,8 +99,33 @@ public class MainController {
         return "posts";
     }
 
+
+// Its not the best but working ....
+    @GetMapping("/sortedPosts")
+    public String sortedPostsByTitle(Model model){
+        model.addAttribute("posts",sortService.sortPosts(postRepository));
+        return "sortedPosts";
+    }
+
+
+
+// The moethod below DOES NOT WORK
+
+    @GetMapping("/sortedPosts2")
+    public String sortedPostsByTitle2(Model model){
+
+        Sort.Direction direction = Sort.Direction.ASC;
+        Sort sort = Sort.by(direction,"title");
+
+        List<Post> postsList = postRepository
+                    .findAllByTitleContains(sort);
+        model.addAttribute("posts", postsList);
+
+        return "sortedPosts";
+    }
+
     @GetMapping("/posts/{title}/{sortField}/{sortDirection}")
-    public String postsByTitle(@PathVariable String title,
+    public String sortedPostsByTitle(@PathVariable String title,
                                @PathVariable String sortField,
                                @PathVariable String sortDirection,
                                Model model){
@@ -105,12 +136,13 @@ public class MainController {
         }
 
         List<Post> postsList = postRepository
-                .findAllByTitleContains(title, Sort.by(Sort.Direction.fromString(sortDirection), sortField));
+                //.findAllByTitleContains(title, Sort.by(Sort.Direction.fromString(sortDirection), sortField));
+                //.findAllByTitleContains(title, Sort.by(Sort.Direction.fromString(sortDirection)));
                 //.findAllByTitleContains(title, Sort.by(Sort.Direction.fromString(direction.toString()), sortField));
+                .findAllByTitleContains(title, Sort.by(direction,sortField));
                 // below we use direction variable
         model.addAttribute("posts", postsList);
         return "posts";
     }
-
 
 }

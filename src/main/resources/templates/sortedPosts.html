@@ -5,19 +5,20 @@
     <title>Mini blog</title>
 </head>
 <body>
+
 <div class="header">
     <div th:replace="~{includes/searchbar :: searchForm}"></div>
 </div>
 
 <div>
-        <a th:href="@{/sortedPosts}">
+    <a th:href="@{/posts}">
         <button name="title" method="get">
-            Sort posts </button>
-              </a>
+            Back to unsorted </button>
+    </a>
 </div>
 
 
-<h1>My posts</h1>
+<h1>Sorted posts</h1>
 <div th:each="post : ${posts}">
     <h2 th:text="${post.title}"></h2>
     <div th:text="${post.content}"></div>

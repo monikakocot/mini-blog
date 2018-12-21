@@ -17,7 +17,7 @@ import java.util.*;
 //@Table —
 // Dzięki tej adnotacji możemy określić dodatkowe parametry związane z tabelą bazy danych,
 // którą ta klasa reprezentuje. Możemy określić np. nazwę.
-public class Post {
+public class Post implements Comparable<Post>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,6 +94,7 @@ public class Post {
         postComment.setPost(null);
     }
 
+
 //GETTERS, SETTERS, TOSTRING
 
     public Long getId() {
@@ -137,5 +138,12 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+
+    @Override
+    public int compareTo(Post o) {
+        int compareTitle = title.compareTo(o.title);
+        return compareTitle;
     }
 }
