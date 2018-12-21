@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.akademiakodu.miniblog.model.entities.Post;
 import pl.akademiakodu.miniblog.model.entities.PostComment;
 import pl.akademiakodu.miniblog.model.repositories.PostRepository;
+import pl.akademiakodu.miniblog.services.UserSessionService;
 
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ public class PostController {
 
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    UserSessionService userSessionService;
 
     @GetMapping("/post/{postId}")
     public String post(@PathVariable Long postId, Model model){
@@ -33,6 +36,11 @@ public class PostController {
     @GetMapping("/post/{postId}/addComment")
     public String postAddComment (@PathVariable Long postId, Model model){
         Optional<Post> postOptional = postRepository.findById(postId);
+
+        if(userSessionService.getUserDto() == null){
+
+            return "error";
+        }
 
         postOptional.ifPresent(post -> {
             model.addAttribute("post", post);

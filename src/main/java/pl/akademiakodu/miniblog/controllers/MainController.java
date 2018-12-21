@@ -51,6 +51,11 @@ public class MainController {
         }
     }
 
+    @GetMapping("/guest")
+    public String getGuestPage(){
+            return "index";
+    }
+
     @PostMapping("/addPost")
     public String addPost(Model model, @RequestParam (value = "title") String titleParam, @RequestParam String content){
         System.out.println("Params: " + titleParam + ", " + content);
@@ -85,6 +90,18 @@ public class MainController {
         }
         model.addAttribute("posts", postsList);
         return "posts";
+    }
+
+    @GetMapping("/postsUser")
+    public String postsPageUser(Model model){
+        List<Post> postsList = new ArrayList<>();
+        Iterable<Post> postIterable = postRepository.findAll();
+
+        for (Post post : postIterable) {
+            postsList.add(post);
+        }
+        model.addAttribute("posts", postsList);
+        return "postsUser";
     }
 
     // DZIALA BEZ IMPLEMENTACJI METODY findAllByTitleContains(title) !!!!!!!!!!!!! :O :O :O
