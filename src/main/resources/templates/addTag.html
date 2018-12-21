@@ -11,7 +11,7 @@
 <form th:action="@{/addTag}" method="post">
     <input type="text" th:name="tagId" placeholder="TagId...">
     <br>
-    <input th:type="text" th:name="postId" placeholder="PostId...">
+    <input th:type="hidden" th:name="postId" placeholder="PostId...">
     <br>
     <input th:type="submit" value="Add Tag!">
 </form>

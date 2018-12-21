@@ -89,14 +89,15 @@ public class MainController {
 
     // DZIALA BEZ IMPLEMENTACJI METODY findAllByTitleContains(title) !!!!!!!!!!!!! :O :O :O
     @GetMapping("/posts/{title}")
-    public String postsByTitle(@PathVariable String title, Model model){
+    public String postsByTitle(@PathVariable String title, Model model, Post post){
         List<Post> postsList = new ArrayList<>();
         Iterable<Post> postIterable = postRepository.findAllByTitleContains(title);
-        for (Post post : postIterable) {
-            postsList.add(post);
+        for (Post posts : postIterable) {
+            postsList.add(posts);
         }
         model.addAttribute("posts", postsList);
-        return "posts";
+
+        return "post";
     }
 
 

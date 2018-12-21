@@ -30,6 +30,17 @@ public class PostController {
         return "post";
     }
 
+    @GetMapping("/post/{postId}/addComment")
+    public String postAddComment (@PathVariable Long postId, Model model){
+        Optional<Post> postOptional = postRepository.findById(postId);
+
+        postOptional.ifPresent(post -> {
+            model.addAttribute("post", post);
+        });
+
+        return "comment";
+    }
+
     @PostMapping("/post/addComment")
     public String addComment(@RequestParam String commentBody, @RequestParam Long postId){
         PostComment postComment = new PostComment();

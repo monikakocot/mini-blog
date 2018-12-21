@@ -50,7 +50,6 @@ public class TagRestController {
         return ResponseEntity.ok().body(modelMapper.map(post, PostDto.class));
     }
 
-    //SPRAWDZI W POSTMAN CZY DZIALA !!!!!!!!!!!!!!
     @GetMapping("/tags/")
     public List<Tag> getAllTags(){
         return tagRepository.findAll();
