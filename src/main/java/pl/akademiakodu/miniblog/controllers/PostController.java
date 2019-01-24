@@ -36,12 +36,9 @@ public class PostController {
     @GetMapping("/post/{postId}/addComment")
     public String postAddComment (@PathVariable Long postId, Model model){
         Optional<Post> postOptional = postRepository.findById(postId);
-
         if(userSessionService.getUserDto() == null){
-
             return "error";
         }
-
         postOptional.ifPresent(post -> {
             model.addAttribute("post", post);
         });
@@ -53,6 +50,10 @@ public class PostController {
     public String addComment(@RequestParam String commentBody, @RequestParam Long postId){
         PostComment postComment = new PostComment();
         postComment.setComment(commentBody);
+        if(userSessionService.getUserDto() == null){
+
+            return "error";
+        }
 
         Optional<Post> postOptional = postRepository.findById(postId);
         postOptional.ifPresent(asd -> {

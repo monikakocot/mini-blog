@@ -3,35 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Mini blog</title>
+
+    <!--BOOTSTRAP-->
+    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!--END BOOTSTRAP-->
+
 </head>
 <body>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div th:replace="~{includes/searchbar :: searchForm}"></div>
+                    <div>
+                        <a th:href="@{/posts}">
+                            <button name="title" method="get">
+                                Back to unsorted </button>
+                        </a>
+                    </div>
+            </div>
+            <br>
+            <h3>Sorted posts</h3>
+            <div th:each="post : ${posts}">
 
-<div class="header">
-    <div th:replace="~{includes/searchbar :: searchForm}"></div>
-</div>
+                <h4 th:text="${post.title}"></h4>
+                <div th:text="${post.content}"></div>
+                <!-- czas, treść -->
+                <br>
+                <a th:href="@{/addTag}">Add Tags to the post!</a>
+                <h3> Comments:</h3>
+                <div th:each="comment : ${post.comments}">
+                    <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
+                    <div th:text="${comment.comment}"></div>
+                </div>
+                <a th:href="@{'/post/' + ${post.id}}">Add Comment!</a>
 
-<div>
-    <a th:href="@{/posts}">
-        <button name="title" method="get">
-            Back to unsorted </button>
-    </a>
-</div>
-
-
-<h1>Sorted posts</h1>
-<div th:each="post : ${posts}">
-    <h2 th:text="${post.title}"></h2>
-    <div th:text="${post.content}"></div>
-    <!-- czas, treść -->
-    <br>
-    <a th:href="@{/addTag}">Add Tags to the post!</a>
-    <h3> Comments:</h3>
-    <div th:each="comment : ${post.comments}">
-        <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
-        <div th:text="${comment.comment}"></div>
+            </div>
+        </div>
     </div>
-    <a th:href="@{'/post/' + ${post.id}}">Add Comment!</a>
-
 </div>
+
 </body>
 </html>

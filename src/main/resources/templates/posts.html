@@ -40,7 +40,9 @@
                 <div th:text="${post.content}"></div>
                 <!-- czas, treść -->
                 <br>
-                <a th:href="@{/addTag}">Add Tags to the post!</a>
+                <!--<a th:href="@{/addTag}">Add Tags to the post!</a>-->
+                <a th:href="@{'/post/' + ${post.id} + '/addTag'}">Add Tags to the post!</a>
+
                 <h3> Comments:</h3>
                     <div th:each="comment : ${post.comments}">
                     <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>

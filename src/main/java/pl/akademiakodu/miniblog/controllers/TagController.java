@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import pl.akademiakodu.miniblog.controllers.restcontrollers.TagRestController;
 import pl.akademiakodu.miniblog.model.dtos.PostDto;
 import pl.akademiakodu.miniblog.model.entities.Post;
+import pl.akademiakodu.miniblog.model.entities.PostComment;
 import pl.akademiakodu.miniblog.model.entities.Tag;
 import pl.akademiakodu.miniblog.model.repositories.PostRepository;
 import pl.akademiakodu.miniblog.model.repositories.TagRepository;
+import pl.akademiakodu.miniblog.services.UserSessionService;
+
+import java.util.Optional;
 
 @Controller
 public class TagController {
@@ -21,6 +25,8 @@ public class TagController {
     TagRepository tagRepository;
     @Autowired
     TagRestController tagRestController;
+    @Autowired
+    UserSessionService userSessionService;
 
 
     @PostMapping("/newTag")
@@ -31,16 +37,47 @@ public class TagController {
 
     @GetMapping("/addTag")
     public String addTag(Model model) {
+
         model.addAttribute("tags",tagRestController.getAllTags());
         return "addTag";
     }
+//////////////////////adding Tags for a link//////////////////////////////
+    @GetMapping("/post/{postId}/addTag")
+    public String postAddTag (@PathVariable Long postId, Model model){
+        Optional<Post> postOptional = postRepository.findById(postId);
+        if(userSessionService.getUserDto() == null && userSessionService.getUserDto().getUserName() != "administrator"){
+            return "error";
+        }
+        postOptional.ifPresent(post -> {
+            model.addAttribute("post", post);
+            model.addAttribute("tags",tagRestController.getAllTags());
+        });
 
-    @ResponseBody
+        return "addTag";
+    }
+
+    @PostMapping("/post/{postId}/addTag")
+    public String addTag(@RequestParam Long tagId, @RequestParam Long postId, Model model){
+
+
+        if(userSessionService.getUserDto() == null || userSessionService.getUserDto().getUserName() != "administrator"){
+            return "error";
+        }
+        Optional<Post> postOptional = postRepository.findById(postId);
+        tagRestController.addTagToPost(tagId,postId);
+        return "redirect:/post/" + postId;
+    }
+
+    //////////////////////adding Tags for a link//////////////////////////////
+    //@ResponseBody
     @PostMapping("/addTag")
     public String newTag (@RequestParam Long tagId, @RequestParam Long postId, Model model){
-
+        if(userSessionService.getUserDto() == null || userSessionService.getUserDto().getUserName() != "administrator"){
+            return "error";
+        }
         tagRestController.addTagToPost(tagId,postId);
-        return "Your tag is added!";
+        //return "Your tag is added!";
+        return "redirect:/post/" + postId;
     }
 
 }
