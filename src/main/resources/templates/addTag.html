@@ -28,6 +28,8 @@
                     <!--<input th:type="submit" value="Add Tag!">-->
                 <!--</form>-->
 
+                    <p th:text="${message}"></p>
+
                     <form th:action="@{'/post/' + ${post.id} + '/addTag'}" method="post">
                         <input type="hidden" name="postId" th:value="${post.id}">
                         <input type="text" th:name="tagId" placeholder="TagId...">

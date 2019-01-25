@@ -45,7 +45,7 @@ public class TagController {
     @GetMapping("/post/{postId}/addTag")
     public String postAddTag (@PathVariable Long postId, Model model){
         Optional<Post> postOptional = postRepository.findById(postId);
-        if(userSessionService.getUserDto() == null && userSessionService.getUserDto().getUserName() != "administrator"){
+        if(userSessionService.getUserDto() == null && !userSessionService.getUserDto().getUserName().equals("administrator")){
             return "error";
         }
         postOptional.ifPresent(post -> {
@@ -60,24 +60,34 @@ public class TagController {
     public String addTag(@RequestParam Long tagId, @RequestParam Long postId, Model model){
 
 
-        if(userSessionService.getUserDto() == null || userSessionService.getUserDto().getUserName() != "administrator"){
+        if(userSessionService.getUserDto() == null || !userSessionService.getUserDto().getUserName().equals("administrator")){
             return "error";
         }
         Optional<Post> postOptional = postRepository.findById(postId);
-        tagRestController.addTagToPost(tagId,postId);
-        return "redirect:/post/" + postId;
+
+        if(tagRepository.existsById(tagId)) {
+            tagRestController.addTagToPost(tagId, postId);
+            return "redirect:/post/" + postId;
+        }
+        model.addAttribute("message","This tag doesn't exist, please choose another one");
+        return "redirect:/post/" + postId +"/addTag";
+
     }
 
     //////////////////////adding Tags for a link//////////////////////////////
     //@ResponseBody
     @PostMapping("/addTag")
     public String newTag (@RequestParam Long tagId, @RequestParam Long postId, Model model){
-        if(userSessionService.getUserDto() == null || userSessionService.getUserDto().getUserName() != "administrator"){
+        if(userSessionService.getUserDto() == null || !userSessionService.getUserDto().getUserName().equals("administrator")){
             return "error";
         }
-        tagRestController.addTagToPost(tagId,postId);
-        //return "Your tag is added!";
-        return "redirect:/post/" + postId;
+
+        if(tagRepository.existsById(tagId)) {
+            tagRestController.addTagToPost(tagId, postId);
+            return "redirect:/post/" + postId;
+        }
+
+        return "redirect:/addTag";
     }
 
 }
