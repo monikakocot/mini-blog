@@ -126,13 +126,13 @@ public class MainController {
     @GetMapping("/sortedPosts2")
     public String sortedPostsByTitle2(Model model){
 
-        Sort.Direction direction = Sort.Direction.ASC;
+        /*Sort.Direction direction = Sort.Direction.ASC;
         Sort sort = Sort.by(direction,"title");
+        List<Post> postsList = postRepository.findAllByTitleContains(sort);*/
 
-        List<Post> postsList = postRepository
-                    .findAllByTitleContains(sort);
+
+        List<Post> postsList = postRepository.findAll(Sort.by(Sort.Direction.ASC, "title"));
         model.addAttribute("posts", postsList);
-
         return "sortedPosts";
     }
 
