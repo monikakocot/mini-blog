@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.akademiakodu.miniblog.controllers.restcontrollers.TagRestController;
 import pl.akademiakodu.miniblog.model.dtos.PostDto;
 import pl.akademiakodu.miniblog.model.entities.Post;
@@ -57,10 +58,11 @@ public class TagController {
     }
 
     @PostMapping("/post/{postId}/addTag")
-    public String addTag(@RequestParam Long tagId, @RequestParam Long postId, Model model){
+    public String addTag(@RequestParam Long tagId, @RequestParam Long postId, Model model,
+                         RedirectAttributes redirectAttributes){
 
 
-        if(userSessionService.getUserDto() == null || !userSessionService.getUserDto().getUserName().equals("administrator")){
+       if(userSessionService.getUserDto() == null || !userSessionService.getUserDto().getUserName().equals("administrator")){
             return "error";
         }
         Optional<Post> postOptional = postRepository.findById(postId);
@@ -69,9 +71,10 @@ public class TagController {
             tagRestController.addTagToPost(tagId, postId);
             return "redirect:/post/" + postId;
         }
-        model.addAttribute("message","This tag doesn't exist, please choose another one");
-        return "redirect:/post/" + postId +"/addTag";
+        redirectAttributes.addFlashAttribute("message","This tag doesn't exist, please choose another one");
 
+        return "redirect:/post/" + postId +"/addTag";
+        //return "addTag";
     }
 
     //////////////////////adding Tags for a link//////////////////////////////

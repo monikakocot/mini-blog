@@ -19,6 +19,10 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <div>
+                    <!--<p th:if="${message} != null" th:text="${message}"></p>-->
+                    <div th:if="${message} != null" >
+                       <p th:text="${message}"></p>
+                    </div>
                 <h3>Add Tag to The post</h3>
                 <!--<form th:action="@{/addTag}" method="post">-->
                     <!--<input type="text" th:name="tagId" placeholder="TagId...">-->
@@ -27,8 +31,6 @@
                     <!--<br>-->
                     <!--<input th:type="submit" value="Add Tag!">-->
                 <!--</form>-->
-
-                    <p th:text="${message}"></p>
 
                     <form th:action="@{'/post/' + ${post.id} + '/addTag'}" method="post">
                         <input type="hidden" name="postId" th:value="${post.id}">
