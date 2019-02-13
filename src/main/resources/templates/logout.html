@@ -1,38 +1,147 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Blog logout</title>
 
-    <!--BOOTSTRAP-->
-    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
-    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <!--END BOOTSTRAP-->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+        background-color: #ddd;
+        }
+
+        header {
+            height: 70vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video.header {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        header h1 {
+            position: absolute;
+            z-index: 1;
+            color: white;
+            width: 100%;
+            text-align: center;
+            font-family: arial;
+            text-transform: uppercase;
+            font-size: 36px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px 0;
+            animation: text 12s infinite;
+            opacity: 0;
+        }
+
+        header h1:nth-of-type(2) {
+            animation-delay: 4s;
+        }
+
+        header h1:nth-of-type(3) {
+            animation-delay: 8s;
+        }
+
+        @keyframes text {
+            0% {
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 0;
+            }
+
+            8% {
+                opacity: 1
+            }
+
+            25% {
+                opacity: 1
+            }
+
+            28% {
+                opacity: 0
+            }
+
+            33.33% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        button {
+            display: inline-block;
+            width: 18%;
+            box-sizing: border-box;
+            margin: 40px 30px;
+
+            border-style: none;
+            background-color: white;
+            font-family: arial;
+            font-size: 22px;
+            text-transform: uppercase;
+
+            padding: 15px 20px;
+            border-radius: 20px;
+            background-color: grey;
+            box-shadow: 0 0 0 6px black, 0 0 0 12px grey;
+            transition: 0.8s;
+            cursor: pointer;
+        }
+
+        div>h1 {
+            text-align: center;
+            font-family: arial;
+            font-size: 36px;
+            margin-top: 30px;
+        }
+
+        button:hover {
+            sox-shadow: 0 0 0 10px black, 0 0 0 18px yellow;
+            border-radius: 40px;
+        }
+    </style>
 </head>
+
 <body>
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4" style="text-align: center"><img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6f/1328101995_Logout.png" alt="logout_file"></div>
-        <div class="col-sm-4"></div>
+<header>
+    <h1>You neeed to pay to get in!</h1>
+    <h1>Ok just register, login or visit like a guest :) </h1>
+    <h1>And enjoy our blog :)</h1>
+    <video class="header" src="http://websamuraj.pl/examples/yt/wideo/video.mp4" autoplay loop playsinline muted></video>
+</header>
+<div>
+    <div>
+        <h1>You are logged out!</h1>
     </div>
-
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4" style="text-align: center">
-            You are logged out!<br>
-            <a href="/login">Login</a> or
-            <a href="/register">Register</a>
-            <br>
-            or  <a href="/guest">Viit like a guest :)</a>
-            <p th:text="${name}" />
-        </div>
-        <div class="col-sm-4"></div>
+    <div class="buttons">
+        <a href="/register"><button>Register</button></a>
+        <a href="/login"><button>Login</button></a>
+        <a href="/guest"><button>Visit like a guest :)</button></a>
     </div>
+    <!--<p th:text="${name}" />-->
 </div>
 </body>
+
 </html>

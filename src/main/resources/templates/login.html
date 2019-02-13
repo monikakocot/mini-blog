@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Mini blog</title>
-    <!--BOOTSTRAP-->
-    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
-    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <!--END BOOTSTRAP-->
 
-    <!--STYLE CSS FOR BOOTSTRAP LOGIN-->
     <style>
+
+        body{
+        background-color: #ddd;
+        }
+
+        .container {
+            margin: 100px auto;
+            width: 40vw;
+            padding: 16px;
+        }
+
         /* Bordered form */
         form {
             border: 3px solid #f1f1f1;
+            font-family: arial;
+            text-align: center
         }
 
-        /* Full-width inputs */
-        input[type=text], input[type=password] {
-           width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
+       .field{
+           display: block;
+           margin: 20px 0;
+       }
+
+        input {
+            width: 30%;
+            border: 1.5px solid grey;
+
         }
 
         /* Set a style for all buttons */
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-           width: 100%;
+         button {
+            display: inline-block;
+            width: 55%;
+            box-sizing: border-box;
+            margin: 20px 30px 50px 30px;
 
+            border-style: none;
+            background-color: white;
+            font-family: arial;
+            font-size: 22px;
+            text-transform: uppercase;
+
+            padding: 10px 15px;
+            border-radius: 20px;
+            background-color: grey;
+            box-shadow: 0 0 0 6px black, 0 0 0 12px grey;
+            transition: 0.8s;
+            cursor: pointer;
         }
 
         /* Add a hover effect for buttons */
         button:hover {
             opacity: 0.8;
-        }
-
-        /* Extra style for the cancel button (red) */
-        .cancelbtn {
-            width: auto;
-            padding: 10px 18px;
-            background-color: #f44336;
-        }
-
-        /* Add padding to containers */
-        .container {
-            padding: 16px;
-        }
-
-        /* The "Forgot password" text */
-        span.psw {
-            float: right;
-            padding-top: 16px;
         }
 
         /* Change styles for span and cancel button on extra small screens */
@@ -75,60 +75,31 @@
         }
 
     </style>
-    <!--END STYLE CSS FOR BOOTSTRAP LOGIN-->
 
 </head>
+
 <body>
 
-<!--<h1>Zaloguj sie!</h1>
-<form th:action="@{/login}" method="post" th:object="${loginForm}">
-    <input th:type="text" th:field="*{userName}" placeholder="User's name..." th:errorClass="error">
-    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error with User's name...</span>
-    <br>
-    <input th:type="password" th:field="*{password}" th:errorClass="error">
-    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">>Error with User's password...</span>
-    <br>
-    <input type="submit" th:value="Zaloguj">
-</form>-->
-
-<!-- IN REGISTER FORM I think error on website will be with "message" from Class not from <span>-->
-
 <div class="container">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form th:action="@{/login}" method="post" th:object="${loginForm}">
-               <!-- <div class="container">-->
-                    <label for="uname"><b>Username</b></label>
-                    <input th:type="text" th:field="*{userName}" placeholder="User's name..."
-                           th:errorClass="error">
-
-                    <label for="psw"><b>Password</b></label>
-                    <input th:type="password" th:field="*{password}" th:errorClass="error">
-                    <span th:if="${#fields.hasErrors('password')}"
-                          th:errors="*{password}">The password is incorrect...</span>
-                    <button type="submit" th:value="Zaloguj">Login</button>
-
-                <div th:if="${logged}==false" class="col-sm-4">
-                    <p> User does not exist! </p>
-                </div>
-             <!--   </div>-->
-               <!-- <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" class="cancelbtn">Cancel</button>
-                    <span class="psw">Forgot <a href="#">password?</a></span>
-                </div>-->
-            </form>
+    <form th:action="@{/login}" method="post" th:object="${loginForm}">
+        <!-- <div class="container">-->
+        <div class="field">
+            <label for="uname"><b>Username</b></label>
+            <input th:type="text" th:field="*{userName}" placeholder="User's name..." th:errorClass="error">
         </div>
-        <div class="col-sm-4">
+        <div class="field">
+            <label for="psw"><b>Password</b></label>
+            <input th:type="password" th:field="*{password}" th:errorClass="error">
         </div>
-    </div>
+         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The password is incorrect...</span>
+        <button type="submit" th:value="Zaloguj">Login</button>
 
+        <div th:if="${logged}==false" class="col-sm-4">
+            <p> User does not exist! </p>
+        </div>
+    </form>
 </div>
-<!--
-<div th:if="${logged}==false">
-    <p> User does not exist! </p>
-</div>-->
-
 
 </body>
+
 </html>

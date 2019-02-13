@@ -2,28 +2,114 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to my Blog</title>
+    <title>Welcome :)</title>
 
     <!--BOOTSTRAP-->
-    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <!--<link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>-->
     <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!--END BOOTSTRAP-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+          crossorigin="anonymous">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #ddd;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        nav {
+            background-color: rgb(106, 109, 111);
+            /*  padding-left: 5%;*/
+            margin-bottom: 40px;
+            margin-top: 10px;
+        }
+
+        nav ul {
+            max-width: 1280px;
+            margin: 0;
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        nav ul li {
+            float: left;
+
+        }
+
+        nav ul li a {
+            display: block;
+            line-height: 70px;
+            color: #bbb;
+            text-decoration: none;
+            padding: 0 40px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            font-family: 'Roboto', sans-serif;
+            border-right: 2px solid black;
+        }
+
+        nav ul li:nth-last-child(1) a {
+            border-style: none;
+        }
+
+        nav ul li a i {
+            padding-right: 20px;
+            font-size: 24px;
+            vertical-align: -2px;
+        }
+
+        nav ul li a:hover {
+            color: white;
+        }
+
+        .container {
+            height: 80vh;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .jumbotron>img {
+            padding: 30px;
+            background-color: rgb(106, 109, 111);
+        }
+
+        .card-body {
+            margin: 0 auto;
+            max-width: 80vw;
+            font-family: arial;
+            text-align: justify;
+            font-size: 22px;
+        }
+    </style>
+
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Mini Blog</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a th:href="@{/}">Home</a></li>
-            <li><a th:href="@{/postsUser}"> All Posts</a></li>
-            <li><a th:href="@{/logout}">Logout</a></li>
-        </ul>
-    </div>
+<nav>
+    <ul class="clearfix">
+        <li><a href="#">Mini Blog</a></li>
+        <li><a th:href="@{/}"><i class="fas fa-home"></i>Home</a></li>
+        <li><a th:href="@{/postsUser}"><i class="far fa-newspaper"></i>All Posts</a></li>
+        <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
 </nav>
+
+
 <div class="container">
     <div class="jumbotron">
         <img src="http://www.polskapraca.info/wp-content/uploads/2018/03/Oli-Blog-2.jpg">
@@ -32,7 +118,6 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <div th:replace="~{includes/searchbar :: searchForm}"></div>
-
         </div>
         <div class="col-sm-4"></div>
     </div>
@@ -49,11 +134,8 @@
     </div>
 </div>
 
-
 <!--<h6>Witaj na moim blogu <p th:text="${name}"></p></h6>-->
 <!--<p th:text="${'Zalogowany: ' + loggedUser.email}"></p>-->
 <!--<p th:text="${name}"></p>-->
-
-
 </body>
 </html>
