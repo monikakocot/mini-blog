@@ -1,50 +1,188 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Mini blog</title>
 
     <!--BOOTSTRAP-->
-    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <!-- <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'> -->
     <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!--END BOOTSTRAP-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+          crossorigin="anonymous">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #ddd;
+            font-family: arial;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        nav {
+            background-color: rgb(106, 109, 111);
+            /*  padding-left: 5%;*/
+            margin-bottom: 40px;
+            margin-top: 10px;
+        }
+
+        nav ul {
+            max-width: 1280px;
+            margin: 0;
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        nav ul li {
+            float: left;
+
+        }
+
+        nav ul li a {
+            display: block;
+            line-height: 70px;
+            color: #bbb;
+            text-decoration: none;
+            padding: 0 40px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            font-family: 'Roboto', sans-serif;
+            border-right: 2px solid black;
+        }
+
+        nav ul li:nth-last-child(1) a {
+            border-style: none;
+        }
+
+        nav ul li a i {
+            padding-right: 20px;
+            font-size: 24px;
+            vertical-align: -2px;
+        }
+
+        nav ul li a:hover {
+            color: white;
+        }
+
+        .postManager {
+            text-align: center;
+        }
+
+        button {
+            display: inline-block;
+            box-sizing: border-box;
+            margin: 10px;
+
+            border-style: none;
+            background-color: white;
+            font-family: arial;
+            font-size: 16px;
+            text-transform: uppercase;
+
+            padding: 5px 8px;
+            border-radius: 20px;
+            background-color: grey;
+            box-shadow: 0 0 0 2px black, 0 0 0 8px grey;
+            transition: 0.8s;
+            cursor: pointer;
+        }
+
+        body>h2 {
+            text-align: center;
+            margin: 20px auto;
+            font-family: arial;
+            font-size: 42px;
+
+        }
+
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            background-color: rgb(106, 109, 111);
+            width: 80vw;
+
+            margin: 0 auto;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            border-radius: 25px;
+        }
+
+        .posts {
+            padding: 30px;
+            margin: 40px;
+            width: 40%;
+            background-color: #ddd;
+            border: 1px solid black;
+
+            display:flex;
+            flex-direction:column;
+            border-radius: 25px;
+        }
+
+        .posts h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .posts h3 {
+            font-size: 20px;
+            margin:10px 0;
+        }
+    </style>
 
 </head>
+
 <body>
+
+<nav>
+    <ul class="clearfix">
+        <li><a href="#">Mini Blog</a></li>
+        <li><a th:href="@{/}"><i class="fas fa-home"></i>Home</a></li>
+        <li><a th:href="@{/postsUser}"><i class="far fa-newspaper"></i>All Posts</a></li>
+        <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+</nav>
+
+<div class="postManager">
+    <div class="search" th:replace="~{includes/searchbar :: searchForm}"></div>
+    <div>
+        <a th:href="@{/posts}">
+            <button name="title" method="get">
+                Back to unsorted </button>
+        </a>
+    </div>
+</div>
+
+<h2>Sorted posts:</h2>
+
 <div class="container">
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <div th:replace="~{includes/searchbar :: searchForm}"></div>
-                    <div>
-                        <a th:href="@{/posts}">
-                            <button name="title" method="get">
-                                Back to unsorted </button>
-                        </a>
-                    </div>
-            </div>
-            <br>
-            <h3>Sorted posts</h3>
-            <div th:each="post : ${posts}">
-
-                <h4 th:text="${post.title}"></h4>
-                <div th:text="${post.content}"></div>
-                <!-- czas, treść -->
-                <br>
-                <a th:href="@{/addTag}">Add Tags to the post!</a>
-                <h3> Comments:</h3>
-                <div th:each="comment : ${post.comments}">
-                    <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
-                    <div th:text="${comment.comment}"></div>
-                </div>
-                <a th:href="@{'/post/' + ${post.id}}">Add Comment!</a>
-
-            </div>
+    <div class="posts" th:each="post : ${posts}">
+        <a th:href="@{'/post/' + ${post.id}}"><h2 th:text="${post.title}"></h2></a>
+        <div th:text="${post.content}"></div>
+        <h3> Comments:</h3>
+        <div th:each="comment : ${post.comments}">
+            <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
+            <div th:text="${comment.comment}"></div>
         </div>
+        <a th:href="@{'/post/' + ${post.id} + '/addComment/'}">Add Comment!</a>
     </div>
 </div>
 
 </body>
+
 </html>

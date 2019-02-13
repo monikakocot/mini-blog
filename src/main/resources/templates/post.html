@@ -1,75 +1,152 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Mini blog</title>
 
     <!--BOOTSTRAP-->
-    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <!-- <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'> -->
     <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!--END BOOTSTRAP-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+          crossorigin="anonymous">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #ddd;
+            font-family: arial;
+            text-align:center;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        nav {
+            background-color: rgb(106, 109, 111);
+            /*  padding-left: 5%;*/
+            margin-bottom: 40px;
+            margin-top: 10px;
+        }
+
+        nav ul {
+            max-width: 1280px;
+            margin: 0;
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        nav ul li {
+            float: left;
+
+        }
+
+        nav ul li a {
+            display: block;
+            line-height: 70px;
+            color: #bbb;
+            text-decoration: none;
+            padding: 0 40px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            font-family: 'Roboto', sans-serif;
+            border-right: 2px solid black;
+        }
+
+        nav ul li:nth-last-child(1) a {
+            border-style: none;
+        }
+
+        nav ul li a i {
+            padding-right: 20px;
+            font-size: 24px;
+            vertical-align: -2px;
+        }
+
+        nav ul li a:hover {
+            color: white;
+        }
+
+        .container{
+        margin: 0 auto;
+        }
+
+        h1,h3 {
+        margin: 10px 0px;
+        }
+
+        .content{
+       font-size: 25px;
+        }
+    </style>
 
 </head>
 
 <body>
 
+<nav>
+    <ul class="clearfix">
+        <li><a href="#">Mini Blog</a></li>
+        <li><a th:href="@{/}"><i class="fas fa-home"></i>Home</a></li>
+        <li><a th:href="@{/postsUser}"><i class="far fa-newspaper"></i>All Posts</a></li>
+        <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+</nav>
+
 <div class="container" th:if="${post != null}">
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
 
-                <div>
-                    <h1 th:text="${post.title}"></h1>
-                    <div th:text="${post.content}"></div>
-                    <!-- czas, treść -->
-                    <div th:each="comment : ${post.comments}">
-                        <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
-                        <div th:text="${comment.comment}"></div>
-                    </div>
-                </div>
-                <div>
-                    <h3>Add new comment:</h3>
-                    <form th:action="@{/post/addComment}" method="post">
-                        <input type="hidden" name="postId" th:value="${post.id}">
-                        <!--<input type="text" th:name="title" placeholder="Tytuł...">-->
-                        <!--<br>-->
-                        Comment's content:<br>
-                        <textarea th:type="text" th:name="commentBody"></textarea>
-                        <br>
-                        <input th:type="submit" value="Add comment">
-                    </form>
-                </div>
-                <div>
-                    <h3>Add Tag to The post</h3>
-                    <form th:action="@{/addTag}" method="post">
-                        <input type="hidden" name="postId" th:value="${post.id}">
-                        <input type="text" th:name="tagId" placeholder="TagId...">
-                        <br>
-                        <input th:type="submit" value="Add Tag!">
-                    </form>
-                </div>
-
-
-            </div>
+    <div class="posts">
+        <h1 th:text="${post.title}"></h1>
+        <div class="content" th:text="${post.content}"></div>
+        <div th:each="comment : ${post.comments}">
+            <div th:text="${#dates.format(comment.audit.added, 'yyyyMMdd hh:mm:ss')}"></div>
+            <div th:text="${comment.comment}"></div>
         </div>
+    </div>
+    <div>
+        <h3>Add new comment:</h3>
+        <form th:action="@{/post/addComment}" method="post">
+            <input type="hidden" name="postId" th:value="${post.id}">
+            <!--<input type="text" th:name="title" placeholder="Tytuł...">-->
+            <!--<br>-->
+            Comment's content:<br>
+            <textarea th:type="text" th:name="commentBody"></textarea>
+            <br>
+            <input th:type="submit" value="Add comment">
+        </form>
+    </div>
+    <div>
+        <h3>Add Tag to The post</h3>
+        <form th:action="@{/addTag}" method="post">
+            <input type="hidden" name="postId" th:value="${post.id}">
+            <input type="text" th:name="tagId" placeholder="TagId...">
+            <br>
+            <input th:type="submit" value="Add Tag!">
+        </form>
     </div>
 </div>
 
 
 <div class="container" th:if="${post == null}">
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <p>
-                    Soory we have not found the post you are looking for :(
-                </p>
-            </div>
-        </div>
-    </div>
+
+    <p>
+        Soory we have not found the post you are looking for :(
+    </p>
+
 </div>
 
 </body>
+
 </html>
