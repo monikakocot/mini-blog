@@ -102,7 +102,7 @@ public class MainController {
         return "postsUser";
     }
 
-    //WORKS WITHOUT IMPLEMENTATION findAllByTitleContains(title) ??????!!!!!!!!!!!!! :O :O :O
+    //WORKS WITHOUT IMPLEMENTATION findAllByTitleContains(title) - Spring Data JPA
     @GetMapping("/posts/{title}")
     public String postsByTitle(@PathVariable String title, Model model, Post post){
         List<Post> postsList = new ArrayList<>();

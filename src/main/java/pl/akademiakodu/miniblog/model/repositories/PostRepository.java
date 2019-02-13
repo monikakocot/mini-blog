@@ -21,6 +21,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByTitleContainsOrContentContains(String likeTitle, String likeContent);
 //all this methods we need to implement in class wich implements PostRepository interface
+    // in fact we dont have to
 
 
 }
